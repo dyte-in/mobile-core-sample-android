@@ -2,27 +2,19 @@ package com.rohitkhirid.coresampleapp
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.dyte.mobilecorekmm.Utils.printLog
+import com.dyte.mobilecorekmm.DyteAndroidClientBuilder
 import com.dyte.mobilecorekmm.listeners.DyteMeetingRoomEventsListener
 import com.dyte.mobilecorekmm.listeners.DyteParticipantEventsListener
 import com.dyte.mobilecorekmm.listeners.DyteSelfEventsListener
-import com.dyte.mobilecorekmm.media.view.VideoView
+import com.dyte.mobilecorekmm.media.VideoView
 import com.dyte.mobilecorekmm.models.DyteMeetingInfo
 import com.dyte.mobilecorekmm.models.DyteMeetingParticipant
 import com.dyte.mobilecorekmm.models.DyteRoomParticipants
-import com.dyte.mobilecorekmm.permission.OnPermissionChangeListener
-import com.dyte.mobilecorekmm.permission.Permission.PERMISSION_CAMERA
-import com.dyte.mobilecorekmm.permission.Permission.PERMISSION_MICROPHONE
-import com.dyte.mobilecorekmm.permission.Permission.PERMISSION_STORAGE
-import com.dyte.mobilecorekmm.permission.PermissionManager
-import com.dyte.mobilecorekmm.permission.PermissionManagerHost
 import com.rohitkhirid.coresampleapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,9 +24,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionChangeListener {
+class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
-  private lateinit var permissionManager: PermissionManager
 
   private val job = Job()
   private val uiScope = CoroutineScope(Dispatchers.Main + job)
@@ -44,10 +35,10 @@ class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionCha
   private var isAudioEnabled = true
   private var isVideoEnabled = true
 
-  private val dyteClient by lazy {
-    (application as SampleApp).dyteClient
+  private val meeting by lazy {
+    DyteAndroidClientBuilder.build(this)
   }
-
+  
   private val meetingRoomEventListener = object : DyteMeetingRoomEventsListener {
     override fun onMeetingRoomJoinStarted() {
       super.onMeetingRoomJoinStarted()
@@ -69,25 +60,6 @@ class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionCha
       super.onMeetingRoomLeft()
       startActivity(Intent(this@MainActivity, CallLeftActivity::class.java))
       finishAffinity()
-    }
-
-    override fun onParticipantsUpdated(
-      participants: DyteRoomParticipants,
-      enabledPaginator: Boolean
-    ) {
-      super.onParticipantsUpdated(participants, enabledPaginator)
-      refreshGrid(participants.active)
-    }
-
-    override fun onParticipantUpdated(participant: DyteMeetingParticipant) {
-      super.onParticipantUpdated(participant)
-      updateParticipant(participant)
-    }
-
-    override fun onParticipantJoin(participant: DyteMeetingParticipant) {
-      super.onParticipantJoin(participant)
-      val videoView = VideoView(this@MainActivity)
-      participantsToViews[participant.id] = videoView
     }
   }
 
@@ -125,25 +97,66 @@ class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionCha
       super.videoUpdate(videoEnabled, participant)
       updateParticipant(participant)
     }
+
+    override fun onParticipantsUpdated(
+      participants: DyteRoomParticipants,
+      enabledPaginator: Boolean
+    ) {
+      super.onParticipantsUpdated(participants, enabledPaginator)
+      refreshGrid(participants.active)
+    }
+
+    override fun onParticipantUpdated(participant: DyteMeetingParticipant) {
+      super.onParticipantUpdated(participant)
+      updateParticipant(participant)
+    }
+
+    override fun onParticipantJoin(participant: DyteMeetingParticipant) {
+      super.onParticipantJoin(participant)
+      val videoView = VideoView(this@MainActivity)
+      participantsToViews[participant.id] = videoView
+    }
   }
 
-  override fun onPermissionDenied() {
-    showPermissionError("Permissions are denied, You need to allow permission to be able to join in a meeting")
-  }
 
-  override fun onPermissionDeniedAlways() {
-    showPermissionError("Permissions are denied, You need to allow permission to be able to join in a meeting")
-  }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-  override fun onPermissionGranted() {
+    binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+    setContentView(binding.root)
+
+    meeting.addMeetingRoomEventsListener(meetingRoomEventListener)
+    meeting.addSelfEventsListener(selfEventsListener)
+    meeting.addParticipantEventsListener(participantEventsListener)
+
+    binding.ivCamera.setOnClickListener {
+      if (isVideoEnabled) {
+        meeting.self.disableVideo()
+      } else {
+        meeting.self.enableVideo()
+      }
+    }
+
+    binding.ivMic.setOnClickListener {
+      if (isAudioEnabled) {
+        meeting.self.disableAudio()
+      } else {
+        meeting.self.enableAudio()
+      }
+    }
+
+    binding.ivSwitchCamera.setOnClickListener {
+      meeting.self.switchCamera()
+    }
+
+    binding.ivLeaveCall.setOnClickListener {
+      meeting.leaveRoom()
+    }
+
     val meetingInfo = DyteMeetingInfo(
-      orgId = "60709d2a-c83e-477a-8199-f00ff680c44d",
-      baseUrl = "https://api.staging.dyte.in",
-      roomName = "jzkmpb-unvpzs",
-      authToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyNDRiODdlLWY1NDktNGNlYS1hZWI4LWNjZGRhNGRjNzY2NyIsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE2NTc3MDgxMjcsImV4cCI6MTY2NjM0ODEyN30.hmbKby92cmeFlYpUwiOlVdghvT-oON_B-CJ3zKDO2R5b1tkoD7PFSukJTNcOapIs0ci_0bpO8j_JujN3S6qiIFL70WrgupD7OckL4BKDbbHKzmgtH8eSlVwYumt0ZgxqlnwzrGxDV-gFIweWRPmPpCNLFr1Df5Qso-H8FhdDwMA",
-      displayName = null,
-      enableAudio = isAudioEnabled,
-      enableVideo = isVideoEnabled
+      orgId = ORGNIZATION_ID,
+      roomName = MEETING_ROOM_NAME,
+      authToken = AUTH_TOKEN,
     )
 
     uiScope.launch(Dispatchers.IO) {
@@ -152,67 +165,11 @@ class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionCha
           showLoader()
         }
         withContext(Dispatchers.IO) {
-          dyteClient.init(meetingInfo)
-          dyteClient.joinRoom()
+          meeting.init(meetingInfo)
+          meeting.joinRoom()
         }
       }
     }
-  }
-
-  override fun requestPermission(permissions: List<String>) {
-    if (VERSION.SDK_INT >= VERSION_CODES.M) {
-      requestPermissions(permissions.toTypedArray(), 111)
-    }
-  }
-
-  override fun shouldShowPermissionRational(permission: String): Boolean {
-    return if (VERSION.SDK_INT >= VERSION_CODES.M) {
-      shouldShowRequestPermissionRationale(permission)
-    } else {
-      return false
-    }
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
-    setContentView(binding.root)
-
-    dyteClient.addMeetingRoomEventsListener(meetingRoomEventListener)
-    dyteClient.addSelfEventsListener(selfEventsListener)
-    dyteClient.addParticipantEventsListener(participantEventsListener)
-
-    binding.ivCamera.setOnClickListener {
-      if (isVideoEnabled) {
-        dyteClient.getSelf().disableVideo()
-      } else {
-        dyteClient.getSelf().enableVideo()
-      }
-    }
-
-    binding.ivMic.setOnClickListener {
-      if (isAudioEnabled) {
-        dyteClient.getSelf().disableAudio()
-      } else {
-        dyteClient.getSelf().enableAudio()
-      }
-    }
-
-    binding.ivSwitchCamera.setOnClickListener {
-      dyteClient.getSelf().switchCamera()
-    }
-
-    binding.ivLeaveCall.setOnClickListener {
-      dyteClient.leaveRoom()
-    }
-
-    permissionManager = PermissionManager(
-      this,
-      arrayListOf(PERMISSION_STORAGE, PERMISSION_MICROPHONE, PERMISSION_CAMERA),
-      this
-    )
-    permissionManager.askPermissions()
   }
 
   override fun onDestroy() {
@@ -221,14 +178,10 @@ class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionCha
     job.cancel()
     uiScope.cancel()
   }
-
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray
-  ) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    permissionManager.processPermissions(grantResults)
+  
+  private fun updateParticipant(participant: DyteMeetingParticipant) {
+    val view = participantsToViews[participant.id]
+    view?.render(participant, meeting)
   }
 
   private fun refreshGrid(activeParticipants: List<DyteMeetingParticipant>) {
@@ -237,14 +190,9 @@ class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionCha
       val videoView = participantsToViews[dyteMeetingParticipant.id]
       videoView?.let {
         binding.llViewContainer.addView(videoView)
-        videoView.render(dyteMeetingParticipant)
+        videoView.render(dyteMeetingParticipant, meeting)
       }
     }
-  }
-
-  private fun updateParticipant(participant: DyteMeetingParticipant) {
-    val view = participantsToViews[participant.id]
-    view?.render(participant) ?: "view not found".printLog()
   }
 
   private fun showLoader() {
@@ -258,18 +206,7 @@ class MainActivity : AppCompatActivity(), PermissionManagerHost, OnPermissionCha
     binding.clLoaderContainer.visibility = View.GONE
     binding.clDataContainer.visibility = View.VISIBLE
   }
-
-  @Suppress("SameParameterValue")
-  private fun showPermissionError(msg: String) {
-    binding.clDataContainer.visibility = View.GONE
-    binding.clLoaderContainer.visibility = View.GONE
-    binding.clErrorContainer.visibility = View.VISIBLE
-    binding.tvError.text = msg
-    binding.btnRetry.setOnClickListener {
-      openAppSettings()
-    }
-  }
-
+  
   @Suppress("SameParameterValue")
   private fun showMeetingJoiningError(msg: String) {
     binding.clDataContainer.visibility = View.GONE

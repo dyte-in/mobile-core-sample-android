@@ -113,7 +113,7 @@
         android:id="@+id/clBottombar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_controlbar"
+        android:background="@color/black"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"

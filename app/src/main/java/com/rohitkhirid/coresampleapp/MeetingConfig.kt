@@ -1,0 +1,5 @@
+package com.rohitkhirid.coresampleapp
+
+const val MEETING_ROOM_NAME = "jzkmpb-unvpzs"
+const val AUTH_TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyNDRiODdlLWY1NDktNGNlYS1hZWI4LWNjZGRhNGRjNzY2NyIsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE2NTc3MDgxMjcsImV4cCI6MTY2NjM0ODEyN30.hmbKby92cmeFlYpUwiOlVdghvT-oON_B-CJ3zKDO2R5b1tkoD7PFSukJTNcOapIs0ci_0bpO8j_JujN3S6qiIFL70WrgupD7OckL4BKDbbHKzmgtH8eSlVwYumt0ZgxqlnwzrGxDV-gFIweWRPmPpCNLFr1Df5Qso-H8FhdDwMA"
+const val ORGNIZATION_ID = "60709d2a-c83e-477a-8199-f00ff680c44d"
