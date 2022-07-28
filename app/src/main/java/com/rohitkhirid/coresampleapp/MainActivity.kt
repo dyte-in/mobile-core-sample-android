@@ -7,15 +7,15 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.dyte.core.DyteAndroidClientBuilder
-import com.dyte.core.listeners.DyteMeetingRoomEventsListener
-import com.dyte.core.listeners.DyteParticipantEventsListener
-import com.dyte.core.listeners.DyteSelfEventsListener
-import com.dyte.core.media.VideoView
-import com.dyte.core.models.DyteMeetingInfo
-import com.dyte.core.models.DyteMeetingParticipant
-import com.dyte.core.models.DyteRoomParticipants
 import com.rohitkhirid.coresampleapp.databinding.ActivityMainBinding
+import io.dyte.core.DyteAndroidClientBuilder
+import io.dyte.core.listeners.DyteMeetingRoomEventsListener
+import io.dyte.core.listeners.DyteParticipantEventsListener
+import io.dyte.core.listeners.DyteSelfEventsListener
+import io.dyte.core.media.VideoView
+import io.dyte.core.models.DyteMeetingInfo
+import io.dyte.core.models.DyteMeetingParticipant
+import io.dyte.core.models.DyteRoomParticipants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
   private val meeting by lazy {
     DyteAndroidClientBuilder.build(this)
   }
-  
+
   private val meetingRoomEventListener = object : DyteMeetingRoomEventsListener {
     override fun onMeetingRoomJoinStarted() {
       super.onMeetingRoomJoinStarted()
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onMeetingRoomJoinFailed(exception: Exception) {
       super.onMeetingRoomJoinFailed(exception)
       hideLoader()
-      showMeetingJoiningError(exception.localizedMessage)
+      showMeetingJoiningError(exception.localizedMessage ?: "something went wrong!")
     }
 
     override fun onMeetingRoomJoined(meetingStartedAt: String) {
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     override fun onAudioUpdate(audioEnabled: Boolean) {
       super.onAudioUpdate(audioEnabled)
       isAudioEnabled = audioEnabled
-      val audioDrawable = if(audioEnabled) {
+      val audioDrawable = if (audioEnabled) {
         R.drawable.ic_baseline_mic_24
       } else {
         R.drawable.ic_baseline_mic_off_24
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     override fun onVideoUpdate(videoEnabled: Boolean) {
       super.onVideoUpdate(videoEnabled)
       isVideoEnabled = videoEnabled
-      val videoDrawable = if(videoEnabled) {
+      val videoDrawable = if (videoEnabled) {
         R.drawable.ic_baseline_videocam_24
       } else {
         R.drawable.ic_baseline_videocam_off_24
@@ -88,12 +88,18 @@ class MainActivity : AppCompatActivity() {
   }
 
   private val participantEventsListener = object : DyteParticipantEventsListener {
-    override fun audioUpdate(audioEnabled: Boolean, participant: DyteMeetingParticipant) {
+    override fun audioUpdate(
+      audioEnabled: Boolean,
+      participant: DyteMeetingParticipant
+    ) {
       super.audioUpdate(audioEnabled, participant)
       updateParticipant(participant)
     }
 
-    override fun videoUpdate(videoEnabled: Boolean, participant: DyteMeetingParticipant) {
+    override fun videoUpdate(
+      videoEnabled: Boolean,
+      participant: DyteMeetingParticipant
+    ) {
       super.videoUpdate(videoEnabled, participant)
       updateParticipant(participant)
     }
@@ -117,7 +123,6 @@ class MainActivity : AppCompatActivity() {
       participantsToViews[participant.id] = videoView
     }
   }
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -178,7 +183,7 @@ class MainActivity : AppCompatActivity() {
     job.cancel()
     uiScope.cancel()
   }
-  
+
   private fun updateParticipant(participant: DyteMeetingParticipant) {
     val view = participantsToViews[participant.id]
     view?.render(participant, meeting)
@@ -206,7 +211,7 @@ class MainActivity : AppCompatActivity() {
     binding.clLoaderContainer.visibility = View.GONE
     binding.clDataContainer.visibility = View.VISIBLE
   }
-  
+
   @Suppress("SameParameterValue")
   private fun showMeetingJoiningError(msg: String) {
     binding.clDataContainer.visibility = View.GONE
