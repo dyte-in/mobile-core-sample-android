@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_mic_off_24
       }
       binding.ivMic.setImageResource(audioDrawable)
+      updateParticipant(meeting.self)
     }
 
     override fun onVideoUpdate(videoEnabled: Boolean) {
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_videocam_off_24
       }
       binding.ivCamera.setImageResource(videoDrawable)
+      updateParticipant(meeting.self)
     }
   }
 
@@ -143,6 +145,7 @@ class MainActivity : AppCompatActivity() {
         MeetingStateJoined -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state joined")
           hideLoader()
+          updateParticipant(meeting.self)
         }
         MeetingStateLeft -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state left")
@@ -162,19 +165,197 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun updateParticipant(participant: DyteMeetingParticipant) {
+    println("DyteMobileClient | MainActivity updateParticipant ${participant.name}")
     val view = participantsToViews[participant.id]
     view?.render(participant, meeting)
   }
 
   private fun refreshGrid(activeParticipants: List<DyteMeetingParticipant>) {
-    binding.llViewContainer.removeAllViews()
-    activeParticipants.forEach { dyteMeetingParticipant ->
-      val videoView = participantsToViews[dyteMeetingParticipant.id]
-      videoView?.let {
-        binding.llViewContainer.addView(videoView)
-        videoView.render(dyteMeetingParticipant, meeting)
+    when (activeParticipants.size) {
+      1 -> {
+        val p1 = activeParticipants[0]
+        val videoView1 = participantsToViews[p1.id]
+        binding.llView1.removeAllViews()
+        videoView1?.let {
+          binding.llView1.addView(videoView1)
+          videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
+        }
+      }
+
+      2 -> {
+        val p1 = activeParticipants[0]
+        val videoView1 = participantsToViews[p1.id]
+        binding.llView1.removeAllViews()
+        videoView1?.let {
+          binding.llView1.addView(videoView1)
+          videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
+        }
+
+        val p2 = activeParticipants[1]
+        val videoView2 = participantsToViews[p2.id]
+        binding.llView2.removeAllViews()
+        videoView2?.let {
+          binding.llView2.addView(videoView2)
+          videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
+        }
+      }
+
+      3 -> {
+        val p1 = activeParticipants[0]
+        val videoView1 = participantsToViews[p1.id]
+        binding.llView1.removeAllViews()
+        videoView1?.let {
+          binding.llView1.addView(videoView1)
+          videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
+        }
+
+        val p2 = activeParticipants[1]
+        val videoView2 = participantsToViews[p2.id]
+        binding.llView2.removeAllViews()
+        videoView2?.let {
+          binding.llView2.addView(videoView2)
+          videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
+        }
+
+        val p3 = activeParticipants[2]
+        val videoView3 = participantsToViews[p3.id]
+        binding.llView3.removeAllViews()
+        videoView3?.let {
+          binding.llView3.addView(videoView3)
+          videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
+        }
+      }
+
+      4 -> {
+        val p1 = activeParticipants[0]
+        val videoView1 = participantsToViews[p1.id]
+        binding.llView1.removeAllViews()
+        videoView1?.let {
+          binding.llView1.addView(videoView1)
+          videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
+        }
+
+        val p2 = activeParticipants[1]
+        val videoView2 = participantsToViews[p2.id]
+        binding.llView2.removeAllViews()
+        videoView2?.let {
+          binding.llView2.addView(videoView2)
+          videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
+        }
+
+        val p3 = activeParticipants[2]
+        val videoView3 = participantsToViews[p3.id]
+        binding.llView3.removeAllViews()
+        videoView3?.let {
+          binding.llView3.addView(videoView3)
+          videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
+        }
+
+        val p4 = activeParticipants[3]
+        val videoView4 = participantsToViews[p4.id]
+        binding.llView4.removeAllViews()
+        videoView4?.let {
+          binding.llView4.addView(videoView4)
+          videoView4.render(p4, meeting, false, p4.screenShareTrack != null)
+        }
+      }
+
+      5 -> {
+        val p1 = activeParticipants[0]
+        val videoView1 = participantsToViews[p1.id]
+        binding.llView1.removeAllViews()
+        videoView1?.let {
+          binding.llView1.addView(videoView1)
+          videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
+        }
+
+        val p2 = activeParticipants[1]
+        val videoView2 = participantsToViews[p2.id]
+        binding.llView2.removeAllViews()
+        videoView2?.let {
+          binding.llView2.addView(videoView2)
+          videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
+        }
+
+        val p3 = activeParticipants[2]
+        val videoView3 = participantsToViews[p3.id]
+        binding.llView3.removeAllViews()
+        videoView3?.let {
+          binding.llView3.addView(videoView3)
+          videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
+        }
+
+        val p4 = activeParticipants[3]
+        val videoView4 = participantsToViews[p4.id]
+        binding.llView4.removeAllViews()
+        videoView4?.let {
+          binding.llView4.addView(videoView4)
+          videoView4.render(p4, meeting, false, p4.screenShareTrack != null)
+        }
+
+        val p5 = activeParticipants[4]
+        val videoView5 = participantsToViews[p5.id]
+        binding.llView5.removeAllViews()
+        videoView5?.let {
+          binding.llView5.addView(videoView5)
+          videoView5.render(p5, meeting, false, p5.screenShareTrack != null)
+        }
+      }
+
+      6 -> {
+        val p1 = activeParticipants[0]
+        val videoView1 = participantsToViews[p1.id]
+        binding.llView1.removeAllViews()
+        videoView1?.let {
+          binding.llView1.addView(videoView1)
+          videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
+        }
+
+        val p2 = activeParticipants[1]
+        val videoView2 = participantsToViews[p2.id]
+        binding.llView2.removeAllViews()
+        videoView2?.let {
+          binding.llView2.addView(videoView2)
+          videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
+        }
+
+        val p3 = activeParticipants[2]
+        val videoView3 = participantsToViews[p3.id]
+        binding.llView3.removeAllViews()
+        videoView3?.let {
+          binding.llView3.addView(videoView3)
+          videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
+        }
+
+        val p4 = activeParticipants[3]
+        val videoView4 = participantsToViews[p4.id]
+        binding.llView4.removeAllViews()
+        videoView4?.let {
+          binding.llView4.addView(videoView4)
+          videoView4.render(p4, meeting, false, p4.screenShareTrack != null)
+        }
+
+        val p5 = activeParticipants[4]
+        val videoView5 = participantsToViews[p5.id]
+        binding.llView5.removeAllViews()
+        videoView5?.let {
+          binding.llView5.addView(videoView5)
+          videoView5.render(p5, meeting, false, p5.screenShareTrack != null)
+        }
+
+        val p6 = activeParticipants[5]
+        val videoView6 = participantsToViews[p6.id]
+        binding.llView6.removeAllViews()
+        videoView6?.let {
+          binding.llView6.addView(videoView6)
+          videoView6.render(p6, meeting, false, p6.screenShareTrack != null)
+        }
       }
     }
+  }
+
+  private fun refreshSelf() {
+
   }
 
   private fun showLoader() {
