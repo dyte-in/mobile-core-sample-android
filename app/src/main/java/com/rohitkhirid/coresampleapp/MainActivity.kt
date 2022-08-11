@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
@@ -177,16 +178,33 @@ class MainActivity : AppCompatActivity() {
         val videoView1 = participantsToViews[p1.id]
         binding.llView1.removeAllViews()
         videoView1?.let {
+          removeFromParent(videoView1)
           binding.llView1.addView(videoView1)
           videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
         }
+
+        binding.ll1.visibility = View.VISIBLE
+        binding.llView2.removeAllViews()
+        binding.llView3.removeAllViews()
+        binding.llView4.removeAllViews()
+        binding.llView5.removeAllViews()
+        binding.llView6.removeAllViews()
+
+        binding.ll2.visibility = View.GONE
+        binding.ll3.visibility = View.GONE
       }
 
       2 -> {
+        binding.llView3.removeAllViews()
+        binding.llView4.removeAllViews()
+        binding.llView5.removeAllViews()
+        binding.llView6.removeAllViews()
+
         val p1 = activeParticipants[0]
         val videoView1 = participantsToViews[p1.id]
         binding.llView1.removeAllViews()
         videoView1?.let {
+          removeFromParent(videoView1)
           binding.llView1.addView(videoView1)
           videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
         }
@@ -195,16 +213,26 @@ class MainActivity : AppCompatActivity() {
         val videoView2 = participantsToViews[p2.id]
         binding.llView2.removeAllViews()
         videoView2?.let {
+          removeFromParent(videoView2)
           binding.llView2.addView(videoView2)
           videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
         }
+
+        binding.ll1.visibility = View.VISIBLE
+        binding.ll2.visibility = View.GONE
+        binding.ll3.visibility = View.GONE
       }
 
       3 -> {
+        binding.llView4.removeAllViews()
+        binding.llView5.removeAllViews()
+        binding.llView6.removeAllViews()
+
         val p1 = activeParticipants[0]
         val videoView1 = participantsToViews[p1.id]
         binding.llView1.removeAllViews()
         videoView1?.let {
+          removeFromParent(videoView1)
           binding.llView1.addView(videoView1)
           videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
         }
@@ -213,6 +241,7 @@ class MainActivity : AppCompatActivity() {
         val videoView2 = participantsToViews[p2.id]
         binding.llView2.removeAllViews()
         videoView2?.let {
+          removeFromParent(videoView2)
           binding.llView2.addView(videoView2)
           videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
         }
@@ -221,16 +250,25 @@ class MainActivity : AppCompatActivity() {
         val videoView3 = participantsToViews[p3.id]
         binding.llView3.removeAllViews()
         videoView3?.let {
+          removeFromParent(videoView3)
           binding.llView3.addView(videoView3)
           videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
         }
+
+        binding.ll1.visibility = View.VISIBLE
+        binding.ll2.visibility = View.VISIBLE
+        binding.ll3.visibility = View.GONE
       }
 
       4 -> {
+        binding.llView5.removeAllViews()
+        binding.llView6.removeAllViews()
+
         val p1 = activeParticipants[0]
         val videoView1 = participantsToViews[p1.id]
         binding.llView1.removeAllViews()
         videoView1?.let {
+          removeFromParent(videoView1)
           binding.llView1.addView(videoView1)
           videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
         }
@@ -239,6 +277,7 @@ class MainActivity : AppCompatActivity() {
         val videoView2 = participantsToViews[p2.id]
         binding.llView2.removeAllViews()
         videoView2?.let {
+          removeFromParent(videoView2)
           binding.llView2.addView(videoView2)
           videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
         }
@@ -247,6 +286,7 @@ class MainActivity : AppCompatActivity() {
         val videoView3 = participantsToViews[p3.id]
         binding.llView3.removeAllViews()
         videoView3?.let {
+          removeFromParent(videoView3)
           binding.llView3.addView(videoView3)
           videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
         }
@@ -255,16 +295,24 @@ class MainActivity : AppCompatActivity() {
         val videoView4 = participantsToViews[p4.id]
         binding.llView4.removeAllViews()
         videoView4?.let {
+          removeFromParent(videoView4)
           binding.llView4.addView(videoView4)
           videoView4.render(p4, meeting, false, p4.screenShareTrack != null)
         }
+
+        binding.ll1.visibility = View.VISIBLE
+        binding.ll2.visibility = View.VISIBLE
+        binding.ll3.visibility = View.GONE
       }
 
       5 -> {
+        binding.llView6.removeAllViews()
+
         val p1 = activeParticipants[0]
         val videoView1 = participantsToViews[p1.id]
         binding.llView1.removeAllViews()
         videoView1?.let {
+          removeFromParent(videoView1)
           binding.llView1.addView(videoView1)
           videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
         }
@@ -273,6 +321,7 @@ class MainActivity : AppCompatActivity() {
         val videoView2 = participantsToViews[p2.id]
         binding.llView2.removeAllViews()
         videoView2?.let {
+          removeFromParent(videoView2)
           binding.llView2.addView(videoView2)
           videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
         }
@@ -281,6 +330,7 @@ class MainActivity : AppCompatActivity() {
         val videoView3 = participantsToViews[p3.id]
         binding.llView3.removeAllViews()
         videoView3?.let {
+          removeFromParent(videoView3)
           binding.llView3.addView(videoView3)
           videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
         }
@@ -289,6 +339,7 @@ class MainActivity : AppCompatActivity() {
         val videoView4 = participantsToViews[p4.id]
         binding.llView4.removeAllViews()
         videoView4?.let {
+          removeFromParent(videoView4)
           binding.llView4.addView(videoView4)
           videoView4.render(p4, meeting, false, p4.screenShareTrack != null)
         }
@@ -297,9 +348,14 @@ class MainActivity : AppCompatActivity() {
         val videoView5 = participantsToViews[p5.id]
         binding.llView5.removeAllViews()
         videoView5?.let {
+          removeFromParent(videoView5)
           binding.llView5.addView(videoView5)
           videoView5.render(p5, meeting, false, p5.screenShareTrack != null)
         }
+
+        binding.ll1.visibility = View.VISIBLE
+        binding.ll2.visibility = View.VISIBLE
+        binding.ll3.visibility = View.VISIBLE
       }
 
       6 -> {
@@ -307,6 +363,7 @@ class MainActivity : AppCompatActivity() {
         val videoView1 = participantsToViews[p1.id]
         binding.llView1.removeAllViews()
         videoView1?.let {
+          removeFromParent(videoView1)
           binding.llView1.addView(videoView1)
           videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
         }
@@ -315,6 +372,7 @@ class MainActivity : AppCompatActivity() {
         val videoView2 = participantsToViews[p2.id]
         binding.llView2.removeAllViews()
         videoView2?.let {
+          removeFromParent(videoView2)
           binding.llView2.addView(videoView2)
           videoView2.render(p2, meeting, false, p2.screenShareTrack != null)
         }
@@ -323,6 +381,7 @@ class MainActivity : AppCompatActivity() {
         val videoView3 = participantsToViews[p3.id]
         binding.llView3.removeAllViews()
         videoView3?.let {
+          removeFromParent(videoView3)
           binding.llView3.addView(videoView3)
           videoView3.render(p3, meeting, false, p3.screenShareTrack != null)
         }
@@ -331,6 +390,7 @@ class MainActivity : AppCompatActivity() {
         val videoView4 = participantsToViews[p4.id]
         binding.llView4.removeAllViews()
         videoView4?.let {
+          removeFromParent(videoView4)
           binding.llView4.addView(videoView4)
           videoView4.render(p4, meeting, false, p4.screenShareTrack != null)
         }
@@ -339,6 +399,7 @@ class MainActivity : AppCompatActivity() {
         val videoView5 = participantsToViews[p5.id]
         binding.llView5.removeAllViews()
         videoView5?.let {
+          removeFromParent(videoView5)
           binding.llView5.addView(videoView5)
           videoView5.render(p5, meeting, false, p5.screenShareTrack != null)
         }
@@ -347,15 +408,22 @@ class MainActivity : AppCompatActivity() {
         val videoView6 = participantsToViews[p6.id]
         binding.llView6.removeAllViews()
         videoView6?.let {
+          removeFromParent(videoView6)
           binding.llView6.addView(videoView6)
           videoView6.render(p6, meeting, false, p6.screenShareTrack != null)
         }
+
+        binding.ll1.visibility = View.VISIBLE
+        binding.ll2.visibility = View.VISIBLE
+        binding.ll3.visibility = View.VISIBLE
       }
     }
   }
 
-  private fun refreshSelf() {
-
+  private fun removeFromParent(child: View) {
+    if (child.parent != null) {
+      (child.parent as ViewGroup).removeView(child) // <- fix
+    }
   }
 
   private fun showLoader() {
