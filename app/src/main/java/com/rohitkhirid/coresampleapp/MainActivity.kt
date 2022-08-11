@@ -7,60 +7,31 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import com.rohitkhirid.coresampleapp.databinding.ActivityMainBinding
 import io.dyte.core.DyteAndroidClientBuilder
-import io.dyte.core.listeners.DyteMeetingRoomEventsListener
 import io.dyte.core.listeners.DyteParticipantEventsListener
 import io.dyte.core.listeners.DyteSelfEventsListener
 import io.dyte.core.media.VideoView
-import io.dyte.core.models.DyteMeetingInfo
 import io.dyte.core.models.DyteMeetingParticipant
 import io.dyte.core.models.DyteRoomParticipants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
-
-  private val job = Job()
-  private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
   private val participantsToViews = hashMapOf<String, VideoView>()
 
   private var isAudioEnabled = true
   private var isVideoEnabled = true
 
+  private lateinit var viewModel: MainViewModel
+
   private val meeting by lazy {
     DyteAndroidClientBuilder.build(this)
-  }
-
-  private val meetingRoomEventListener = object : DyteMeetingRoomEventsListener {
-    override fun onMeetingRoomJoinStarted() {
-      super.onMeetingRoomJoinStarted()
-      showLoader()
-    }
-
-    override fun onMeetingRoomJoinFailed(exception: Exception) {
-      super.onMeetingRoomJoinFailed(exception)
-      hideLoader()
-      showMeetingJoiningError(exception.localizedMessage ?: "something went wrong!")
-    }
-
-    override fun onMeetingRoomJoined(meetingStartedAt: String) {
-      super.onMeetingRoomJoined(meetingStartedAt)
-      hideLoader()
-    }
-
-    override fun onMeetingRoomLeft() {
-      super.onMeetingRoomLeft()
-      startActivity(Intent(this@MainActivity, CallLeftActivity::class.java))
-      finishAffinity()
-    }
   }
 
   private val selfEventsListener = object : DyteSelfEventsListener {
@@ -106,9 +77,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onParticipantsUpdated(
       participants: DyteRoomParticipants,
-      enabledPaginator: Boolean
+      isNextPagePossible: Boolean,
+      isPreviousPagePossible: Boolean
     ) {
-      super.onParticipantsUpdated(participants, enabledPaginator)
+      super.onParticipantsUpdated(participants, isNextPagePossible, isPreviousPagePossible)
       refreshGrid(participants.active)
     }
 
@@ -130,7 +102,8 @@ class MainActivity : AppCompatActivity() {
     binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
     setContentView(binding.root)
 
-    meeting.addMeetingRoomEventsListener(meetingRoomEventListener)
+    viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
     meeting.addSelfEventsListener(selfEventsListener)
     meeting.addParticipantEventsListener(participantEventsListener)
 
@@ -158,30 +131,34 @@ class MainActivity : AppCompatActivity() {
       meeting.leaveRoom()
     }
 
-    val meetingInfo = DyteMeetingInfo(
-      orgId = ORGNIZATION_ID,
-      roomName = MEETING_ROOM_NAME,
-      authToken = AUTH_TOKEN,
-    )
-
-    uiScope.launch(Dispatchers.IO) {
-      runBlocking {
-        withContext(Dispatchers.Main) {
+    viewModel.meetingStateLiveData.observe(this) { state ->
+      when (state) {
+        MeetingStateLoading -> {
+          println("DyteMobileClient | MainActivity onCreate Meeting Loading state")
           showLoader()
         }
-        withContext(Dispatchers.IO) {
-          meeting.init(meetingInfo)
-          meeting.joinRoom()
+        MeetingStateFailed -> {
+          showMeetingJoiningError("Its not you, its us! Something failed, Please try again later")
+        }
+        MeetingStateJoined -> {
+          println("DyteMobileClient | MainActivity onCreate Meeting state joined")
+          hideLoader()
+        }
+        MeetingStateLeft -> {
+          println("DyteMobileClient | MainActivity onCreate Meeting state left")
+          startActivity(Intent(this@MainActivity, CallLeftActivity::class.java))
+          finishAffinity()
         }
       }
     }
+    viewModel.start(meeting)
   }
 
   override fun onDestroy() {
     super.onDestroy()
 
-    job.cancel()
-    uiScope.cancel()
+    meeting.removeSelfEventsListener(selfEventsListener)
+    meeting.removeParticipantEventsListener(participantEventsListener)
   }
 
   private fun updateParticipant(participant: DyteMeetingParticipant) {
