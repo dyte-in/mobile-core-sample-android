@@ -102,10 +102,6 @@ class MainActivity : AppCompatActivity() {
       val videoView = VideoView(this@MainActivity)
       participantsToViews[participant.id] = videoView
     }
-
-    override fun onScreenSharesUpdated() {
-      super.onScreenSharesUpdated()
-    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         MeetingStateJoined -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state joined")
           hideLoader()
-          updateParticipant(meeting.self)
+          refreshGrid(meeting.participants.active)
         }
         MeetingStateLeft -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state left")
