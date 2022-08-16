@@ -89,10 +89,11 @@
       >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:animateLayoutChanges="true"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:animateLayoutChanges="true"
         android:background="#666666"
+        android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@+id/clBottombar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,6 +104,7 @@
           android:id="@+id/ll1"
           android:layout_width="0dp"
           android:layout_height="0dp"
+          android:layout_marginBottom="4dp"
           android:orientation="horizontal"
           android:weightSum="2"
           app:layout_constraintBottom_toTopOf="@+id/ll2"
@@ -113,27 +115,33 @@
           >
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:id="@+id/llView1"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:id="@+id/llView2"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            />
 
       </LinearLayout>
 
       <LinearLayout
-          android:weightSum="2"
           android:id="@+id/ll2"
           android:layout_width="0dp"
           android:layout_height="0dp"
+          android:layout_marginBottom="4dp"
+          android:layout_marginTop="4dp"
           android:orientation="horizontal"
+          android:weightSum="2"
           app:layout_constraintBottom_toTopOf="@+id/ll3"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.5"
@@ -142,27 +150,30 @@
           >
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:id="@+id/llView3"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:id="@+id/llView4"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            />
 
       </LinearLayout>
 
       <LinearLayout
-          android:weightSum="2"
           android:id="@+id/ll3"
           android:layout_width="0dp"
           android:layout_height="0dp"
+          android:layout_marginTop="4dp"
           android:orientation="horizontal"
+          android:weightSum="2"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.5"
@@ -171,18 +182,22 @@
           >
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:id="@+id/llView5"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:id="@+id/llView6"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            />
 
       </LinearLayout>
 
@@ -223,13 +238,13 @@
           android:layout_marginEnd="8dp"
           android:foreground="?android:attr/selectableItemBackground"
           android:scaleType="centerInside"
+          android:src="@drawable/ic_baseline_mic_24"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toStartOf="@+id/ivCamera"
           app:layout_constraintHorizontal_bias="0.5"
           app:layout_constraintStart_toEndOf="@+id/ivSwitchCamera"
           app:layout_constraintTop_toTopOf="parent"
           app:tint="@android:color/white"
-          android:src="@drawable/ic_baseline_mic_24"
           />
 
       <ImageView
@@ -239,13 +254,13 @@
           android:layout_marginStart="8dp"
           android:foreground="?android:attr/selectableItemBackground"
           android:scaleType="centerInside"
+          android:src="@drawable/ic_baseline_videocam_24"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toStartOf="@+id/ivLeaveCall"
           app:layout_constraintHorizontal_bias="0.5"
           app:layout_constraintStart_toEndOf="@+id/ivMic"
           app:layout_constraintTop_toTopOf="parent"
           app:tint="@android:color/white"
-          android:src="@drawable/ic_baseline_videocam_24"
           />
 
       <ImageView

@@ -15,6 +15,8 @@ import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingState
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import com.rohitkhirid.coresampleapp.databinding.ActivityMainBinding
 import io.dyte.core.DyteAndroidClientBuilder
+import io.dyte.core.controllers.PageViewMode.GRID
+import io.dyte.core.controllers.PageViewMode.PAGINATED
 import io.dyte.core.listeners.DyteParticipantEventsListener
 import io.dyte.core.listeners.DyteSelfEventsListener
 import io.dyte.core.media.VideoView
@@ -58,6 +60,9 @@ class MainActivity : AppCompatActivity() {
       }
       binding.ivCamera.setImageResource(videoDrawable)
       updateParticipant(meeting.self)
+
+      meeting.participants.setMode(PAGINATED)
+      meeting.participants.joined.first().disableVideo()
     }
   }
 
@@ -96,6 +101,10 @@ class MainActivity : AppCompatActivity() {
       super.onParticipantJoin(participant)
       val videoView = VideoView(this@MainActivity)
       participantsToViews[participant.id] = videoView
+    }
+
+    override fun onScreenSharesUpdated() {
+      super.onScreenSharesUpdated()
     }
   }
 
@@ -183,15 +192,16 @@ class MainActivity : AppCompatActivity() {
           videoView1.render(p1, meeting, false, p1.screenShareTrack != null)
         }
 
-        binding.ll1.visibility = View.VISIBLE
+
         binding.llView2.removeAllViews()
         binding.llView3.removeAllViews()
         binding.llView4.removeAllViews()
         binding.llView5.removeAllViews()
         binding.llView6.removeAllViews()
 
-        binding.ll2.visibility = View.GONE
-        binding.ll3.visibility = View.GONE
+        binding.ll1.visibility = View.VISIBLE
+        // binding.ll2.visibility = View.GONE
+        // binding.ll3.visibility = View.GONE
       }
 
       2 -> {
@@ -219,8 +229,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.ll1.visibility = View.VISIBLE
-        binding.ll2.visibility = View.GONE
-        binding.ll3.visibility = View.GONE
+        // binding.ll2.visibility = View.GONE
+        // binding.ll3.visibility = View.GONE
       }
 
       3 -> {
