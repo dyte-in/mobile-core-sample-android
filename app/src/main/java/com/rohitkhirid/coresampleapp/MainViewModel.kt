@@ -24,6 +24,8 @@ class MainViewModel : ViewModel() {
     orgId = ORGNIZATION_ID,
     roomName = MEETING_ROOM_NAME,
     authToken = AUTH_TOKEN,
+    enableAudio = true,
+    enableVideo = false
   )
 
   val meetingStateLiveData = MutableLiveData<MeetingRoomState>()

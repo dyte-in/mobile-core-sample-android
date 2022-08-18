@@ -89,6 +89,7 @@
       >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clGridContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:animateLayoutChanges="true"
@@ -204,6 +205,33 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAudioCallContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/clBottombar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_margin="32dp"
+          android:gravity="center"
+          android:text="This is an audio call. No need to render anything here!!"
+          android:textColor="@android:color/holo_red_light"
+          android:textSize="20sp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clBottombar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -216,6 +244,7 @@
         >
 
       <ImageView
+          android:visibility="gone"
           android:id="@+id/ivSwitchCamera"
           android:layout_width="48dp"
           android:layout_height="48dp"
@@ -248,19 +277,21 @@
           />
 
       <ImageView
+          android:visibility="gone"
+          android:clickable="false"
           android:id="@+id/ivCamera"
           android:layout_width="48dp"
           android:layout_height="48dp"
           android:layout_marginStart="8dp"
           android:foreground="?android:attr/selectableItemBackground"
           android:scaleType="centerInside"
+          app:tint="@android:color/darker_gray"
           android:src="@drawable/ic_baseline_videocam_24"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toStartOf="@+id/ivLeaveCall"
           app:layout_constraintHorizontal_bias="0.5"
           app:layout_constraintStart_toEndOf="@+id/ivMic"
           app:layout_constraintTop_toTopOf="parent"
-          app:tint="@android:color/white"
           />
 
       <ImageView

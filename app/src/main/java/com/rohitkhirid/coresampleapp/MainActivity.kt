@@ -26,7 +26,7 @@ import io.dyte.core.models.DyteRoomParticipants
 class MainActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
 
-  private val participantsToViews = hashMapOf<String, VideoView>()
+  // private val participantsToViews = hashMapOf<String, VideoView>()
 
   private var isAudioEnabled = true
   private var isVideoEnabled = true
@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onParticipantJoin(participant: DyteMeetingParticipant) {
       super.onParticipantJoin(participant)
-      val videoView = VideoView(this@MainActivity)
-      participantsToViews[participant.id] = videoView
+      // val videoView = VideoView(this@MainActivity)
+      // participantsToViews[participant.id] = videoView
     }
   }
 
@@ -172,12 +172,12 @@ class MainActivity : AppCompatActivity() {
 
   private fun updateParticipant(participant: DyteMeetingParticipant) {
     println("DyteMobileClient | MainActivity updateParticipant ${participant.name}")
-    val view = participantsToViews[participant.id]
-    view?.render(participant, meeting)
+    // val view = participantsToViews[participant.id]
+    // view?.render(participant, meeting)
   }
 
   private fun refreshGrid(activeParticipants: List<DyteMeetingParticipant>) {
-    when (activeParticipants.size) {
+    /*when (activeParticipants.size) {
       1 -> {
         val p1 = activeParticipants[0]
         val videoView1 = participantsToViews[p1.id]
@@ -423,7 +423,7 @@ class MainActivity : AppCompatActivity() {
         binding.ll2.visibility = View.VISIBLE
         binding.ll3.visibility = View.VISIBLE
       }
-    }
+    }*/
   }
 
   private fun removeFromParent(child: View) {
@@ -442,6 +442,9 @@ class MainActivity : AppCompatActivity() {
     binding.clErrorContainer.visibility = View.GONE
     binding.clLoaderContainer.visibility = View.GONE
     binding.clDataContainer.visibility = View.VISIBLE
+
+    binding.clGridContainer.visibility = View.GONE
+    binding.clAudioCallContainer.visibility = View.VISIBLE
   }
 
   @Suppress("SameParameterValue")
