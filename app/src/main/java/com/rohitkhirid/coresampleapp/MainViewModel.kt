@@ -35,6 +35,7 @@ class MainViewModel : ViewModel() {
   private val meetingRoomEventsListner = object : DyteMeetingRoomEventsListener {
     override fun onMeetingInitStarted() {
       super.onMeetingInitStarted()
+      println("DyteMobileClient | MainViewModel onMeetingInitStarted ")
       viewModelScope.launch(Dispatchers.Main) {
         meetingStateLiveData.value = MeetingStateLoading
       }
@@ -42,6 +43,7 @@ class MainViewModel : ViewModel() {
 
     override fun onMeetingInitCompleted() {
       super.onMeetingInitCompleted()
+      println("DyteMobileClient | MainViewModel onMeetingInitCompleted ")
       meeting.joinRoom()
     }
 
@@ -81,11 +83,8 @@ class MainViewModel : ViewModel() {
 
   fun start(meeting: DyteMobileClient) {
     this.meeting = meeting
-    viewModelScope.launch(Dispatchers.IO) {
-      delay(300)
       meeting.addMeetingRoomEventsListener(meetingRoomEventsListner)
       meeting.init(meetingInfo)
-    }
   }
 
   override fun onCleared() {
