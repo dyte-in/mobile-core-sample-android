@@ -81,7 +81,7 @@
       android:layout_height="0dp"
       android:background="@color/white"
       android:visibility="gone"
-      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/clBottombar"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
@@ -95,223 +95,152 @@
         android:animateLayoutChanges="true"
         android:background="#666666"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/clBottombar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-      <LinearLayout
-          android:id="@+id/ll1"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_marginBottom="4dp"
-          android:orientation="horizontal"
-          android:weightSum="2"
-          app:layout_constraintBottom_toTopOf="@+id/ll2"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          >
-
-        <LinearLayout
-            android:id="@+id/llView1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-        <LinearLayout
-            android:id="@+id/llView2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:id="@+id/ll2"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_marginBottom="4dp"
-          android:layout_marginTop="4dp"
-          android:orientation="horizontal"
-          android:weightSum="2"
-          app:layout_constraintBottom_toTopOf="@+id/ll3"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/ll1"
-          >
-
-        <LinearLayout
-            android:id="@+id/llView3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-        <LinearLayout
-            android:id="@+id/llView4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:id="@+id/ll3"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_marginTop="4dp"
-          android:orientation="horizontal"
-          android:weightSum="2"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/ll2"
-          >
-
-        <LinearLayout
-            android:id="@+id/llView5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-        <LinearLayout
-            android:id="@+id/llView6"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-      </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clAudioCallContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/clBottombar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_margin="32dp"
-          android:gravity="center"
-          android:text="This is an audio call. No need to render anything here!!"
-          android:textColor="@android:color/holo_red_light"
-          android:textSize="20sp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottombar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         >
 
-      <ImageView
-          android:visibility="gone"
-          android:id="@+id/ivSwitchCamera"
-          android:layout_width="48dp"
-          android:layout_height="48dp"
-          android:layout_marginEnd="8dp"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:scaleType="centerInside"
-          android:src="@drawable/ic_baseline_switch_camera_24"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@+id/ivMic"
-          app:layout_constraintHorizontal_bias="0.5"
+      <LinearLayout
+          android:id="@+id/llView1"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginBottom="8dp"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@+id/llView2"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:tint="@android:color/white"
-          />
+          >
 
-      <ImageView
-          android:id="@+id/ivMic"
-          android:layout_width="48dp"
-          android:layout_height="48dp"
-          android:layout_marginEnd="8dp"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:scaleType="centerInside"
-          android:src="@drawable/ic_baseline_mic_24"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@+id/ivCamera"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toEndOf="@+id/ivSwitchCamera"
-          app:layout_constraintTop_toTopOf="parent"
-          app:tint="@android:color/white"
-          />
+        <TextView
+            android:background="@drawable/bg_initials"
+            android:textColor="@color/white"
+            tools:text="RK"
+            android:gravity="center"
+            android:textSize="32dp"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"
+            android:id="@+id/nameTv1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            />
 
-      <ImageView
-          android:visibility="gone"
-          android:clickable="false"
-          android:id="@+id/ivCamera"
-          android:layout_width="48dp"
-          android:layout_height="48dp"
-          android:layout_marginStart="8dp"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:scaleType="centerInside"
-          app:tint="@android:color/darker_gray"
-          android:src="@drawable/ic_baseline_videocam_24"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@+id/ivLeaveCall"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toEndOf="@+id/ivMic"
-          app:layout_constraintTop_toTopOf="parent"
-          />
+      </LinearLayout>
 
-      <ImageView
-          android:id="@+id/ivLeaveCall"
-          android:layout_width="48dp"
-          android:layout_height="48dp"
-          android:layout_marginStart="8dp"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:scaleType="centerInside"
-          android:src="@drawable/ic_baseline_call_end_24"
+      <LinearLayout
+          android:id="@+id/llView2"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginTop="8dp"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toEndOf="@+id/ivCamera"
-          app:layout_constraintTop_toTopOf="parent"
-          app:tint="@android:color/white"
-          />
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/llView1"
+          >
 
+        <TextView
+            android:background="@drawable/bg_initials"
+            android:textColor="@color/white"
+            tools:text="SK"
+            android:gravity="center"
+            android:textSize="32dp"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"
+            android:id="@+id/nameTv2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            />
+
+      </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/clBottombar"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:background="@color/black"
+      android:paddingBottom="4dp"
+      android:paddingTop="4dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      >
+
+    <ImageView
+        android:id="@+id/ivSwitchCamera"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_baseline_switch_camera_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivMic"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white"
+        />
+
+    <ImageView
+        android:id="@+id/ivMic"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_baseline_mic_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivCamera"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivSwitchCamera"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white"
+        />
+
+    <ImageView
+        android:id="@+id/ivCamera"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:clickable="false"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_baseline_videocam_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivLeaveCall"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivMic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/darker_gray"
+        />
+
+    <ImageView
+        android:id="@+id/ivLeaveCall"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_baseline_call_end_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivCamera"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white"
+        />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
