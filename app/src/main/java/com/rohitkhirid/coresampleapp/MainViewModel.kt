@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantJoined
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantLeft
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
@@ -26,6 +27,7 @@ class MainViewModel : ViewModel() {
     object MeetingStateFailed : MeetingRoomState()
     object MeetingStateLeft : MeetingRoomState()
     class MeetingParticipantJoined(val participant: DyteMeetingParticipant) : MeetingRoomState()
+    class MeetingParticipantLeft(val participant: DyteMeetingParticipant) : MeetingRoomState()
     class OnAudioUpdated(val isEnabled: Boolean) : MeetingRoomState()
   }
 
@@ -52,6 +54,11 @@ class MainViewModel : ViewModel() {
     override fun onParticipantJoin(participant: DyteMeetingParticipant) {
       super.onParticipantJoin(participant)
       meetingStateLiveData.value = MeetingParticipantJoined(participant)
+    }
+
+    override fun onParticipantLeave(participant: DyteMeetingParticipant) {
+      super.onParticipantLeave(participant)
+      meetingStateLiveData.value = MeetingParticipantLeft(participant)
     }
   }
 
@@ -85,6 +92,7 @@ class MainViewModel : ViewModel() {
     }
 
     override fun onMeetingRoomLeft() {
+      println("DyteMobileClient | MainViewModel onMeetingRoomLeft ")
       meetingStateLiveData.value = MeetingStateLeft
     }
 

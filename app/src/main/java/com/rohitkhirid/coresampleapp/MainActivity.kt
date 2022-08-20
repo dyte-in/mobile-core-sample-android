@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantJoined
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantLeft
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
@@ -36,10 +37,14 @@ class MainActivity : AppCompatActivity() {
     viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
     binding.ivMic.setOnClickListener {
-      if (meeting.self.audioEnabled) {
-        meeting.self.disableAudio()
-      } else {
-        meeting.self.enableAudio()
+      try {
+        if (meeting.self.audioEnabled) {
+          meeting.self.disableAudio()
+        } else {
+          meeting.self.enableAudio()
+        }
+      } catch (e:Exception) {
+        e.printStackTrace()
       }
     }
 
@@ -53,15 +58,19 @@ class MainActivity : AppCompatActivity() {
           println("DyteMobileClient | MainActivity onCreate Meeting Loading state")
           showLoader()
         }
+
         MeetingStateFailed -> {
           showMeetingJoiningError("Its not you, its us! Something failed, Please try again later")
         }
+
         MeetingStateJoined -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state joined")
           hideLoader()
           val initials = Utils.getInitialsFromName(meeting.self.name)
-          binding.nameTv1.text = initials
+          binding.nameInitials1.text = initials
+          binding.nameTv1.text = meeting.self.name
         }
+
         MeetingStateLeft -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state left")
           startActivity(Intent(this@MainActivity, CallLeftActivity::class.java))
@@ -70,8 +79,14 @@ class MainActivity : AppCompatActivity() {
 
         is MeetingParticipantJoined -> {
           println("DyteMobileClient | MainActivity onCreate MeetingParticipantJoined ${state.participant.name}")
+          binding.llView2.visibility = View.VISIBLE
           val initials = Utils.getInitialsFromName(state.participant.name)
-          binding.nameTv2.text = initials
+          binding.nameInitials2.text = initials
+          binding.nameTv2.text = state.participant.name
+        }
+
+        is MeetingParticipantLeft -> {
+          binding.llView2.visibility = View.GONE
         }
 
         is OnAudioUpdated -> {

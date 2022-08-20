@@ -101,13 +101,13 @@
         app:layout_constraintTop_toTopOf="parent"
         >
 
-      <LinearLayout
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:background="@drawable/bg_peer"
           android:id="@+id/llView1"
           android:layout_width="0dp"
           android:layout_height="0dp"
           android:layout_marginBottom="8dp"
           android:layout_weight="1"
-          android:gravity="center"
           android:orientation="vertical"
           app:layout_constraintBottom_toTopOf="@+id/llView2"
           app:layout_constraintEnd_toEndOf="parent"
@@ -116,6 +116,24 @@
           >
 
         <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/black"
+            tools:text="Rohit"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/nameTv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/bg_initials"
             android:textColor="@color/white"
             tools:text="RK"
@@ -123,20 +141,21 @@
             android:textSize="32dp"
             android:letterSpacing="0.1"
             android:textStyle="bold"
-            android:id="@+id/nameTv1"
+            android:id="@+id/nameInitials1"
             android:layout_width="100dp"
             android:layout_height="100dp"
             />
 
-      </LinearLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-      <LinearLayout
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:visibility="gone"
+          android:background="@drawable/bg_peer"
           android:id="@+id/llView2"
           android:layout_width="0dp"
           android:layout_height="0dp"
           android:layout_marginTop="8dp"
           android:layout_weight="1"
-          android:gravity="center"
           android:orientation="vertical"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -145,19 +164,38 @@
           >
 
         <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/black"
+            tools:text="Shaunak"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/nameTv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/bg_initials"
             android:textColor="@color/white"
-            tools:text="SK"
+            tools:text="SJ"
             android:gravity="center"
             android:textSize="32dp"
             android:letterSpacing="0.1"
             android:textStyle="bold"
-            android:id="@+id/nameTv2"
+            android:id="@+id/nameInitials2"
             android:layout_width="100dp"
             android:layout_height="100dp"
             />
 
-      </LinearLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
