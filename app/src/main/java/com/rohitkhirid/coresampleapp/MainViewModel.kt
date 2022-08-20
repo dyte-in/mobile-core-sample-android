@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantJoined
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantLeft
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingRecordedEnded
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingRecordedStarted
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.OnAudioUpdated
 import io.dyte.core.DyteMobileClient
+import io.dyte.core.controllers.DyteRecordingState.RECORDING
 import io.dyte.core.listeners.DyteMeetingRoomEventsListener
 import io.dyte.core.listeners.DyteParticipantEventsListener
 import io.dyte.core.listeners.DyteSelfEventsListener
@@ -28,6 +31,10 @@ class MainViewModel : ViewModel() {
     object MeetingStateLeft : MeetingRoomState()
     class MeetingParticipantJoined(val participant: DyteMeetingParticipant) : MeetingRoomState()
     class MeetingParticipantLeft(val participant: DyteMeetingParticipant) : MeetingRoomState()
+
+    object MeetingRecordedStarted: MeetingRoomState()
+    object MeetingRecordedEnded: MeetingRoomState()
+
     class OnAudioUpdated(val isEnabled: Boolean) : MeetingRoomState()
   }
 
@@ -86,8 +93,10 @@ class MainViewModel : ViewModel() {
 
     @SuppressLint("SetTextI18n")
     override fun onMeetingRoomJoined(meetingStartedAt: String) {
-      viewModelScope.launch(Dispatchers.Main) {
         meetingStateLiveData.value = MeetingStateJoined
+
+      if(meeting.recording.recordingState == RECORDING) {
+        meetingStateLiveData.value = MeetingRecordedStarted
       }
     }
 
@@ -99,6 +108,16 @@ class MainViewModel : ViewModel() {
     @SuppressLint("SetTextI18n")
     override fun onMeetingRoomJoinFailed(exception: Exception) {
       meetingStateLiveData.value = MeetingStateFailed
+    }
+
+    override fun onMeetingRecordingStarted() {
+      super.onMeetingRecordingStarted()
+      meetingStateLiveData.value = MeetingRecordedStarted
+    }
+
+    override fun onMeetingRecordingEnded() {
+      super.onMeetingRecordingEnded()
+      meetingStateLiveData.value = MeetingRecordedEnded
     }
   }
 

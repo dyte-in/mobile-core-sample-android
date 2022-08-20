@@ -8,6 +8,53 @@
     >
 
   <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/clToolbar"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+      <ImageView
+          android:id="@+id/tbBack"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:layout_marginStart="8dp"
+          android:scaleType="center"
+          android:src="@drawable/ic_baseline_arrow_back_ios_24"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:scaleType="center"
+          android:text="Dyte Audio Call"
+          android:textColor="@color/black"
+          android:textSize="18sp"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/tbBack"
+          app:layout_constraintTop_toTopOf="parent"
+          />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/clErrorContainer"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -16,7 +63,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/clToolbar"
       tools:visibility="visible"
       >
 
@@ -60,7 +107,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/clToolbar"
       tools:visibility="visible"
       >
 
@@ -84,7 +131,7 @@
       app:layout_constraintBottom_toTopOf="@+id/clBottombar"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/clToolbar"
       tools:visibility="visible"
       >
 
@@ -102,12 +149,12 @@
         >
 
       <androidx.constraintlayout.widget.ConstraintLayout
-          android:background="@drawable/bg_peer"
           android:id="@+id/llView1"
           android:layout_width="0dp"
           android:layout_height="0dp"
           android:layout_marginBottom="8dp"
           android:layout_weight="1"
+          android:background="@drawable/bg_peer"
           android:orientation="vertical"
           app:layout_constraintBottom_toTopOf="@+id/llView2"
           app:layout_constraintEnd_toEndOf="parent"
@@ -116,47 +163,47 @@
           >
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            tools:text="Rohit"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:id="@+id/nameTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Rohit"
             />
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/bg_initials"
-            android:textColor="@color/white"
-            tools:text="RK"
-            android:gravity="center"
-            android:textSize="32dp"
-            android:letterSpacing="0.1"
-            android:textStyle="bold"
             android:id="@+id/nameInitials1"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:background="@drawable/bg_initials"
+            android:gravity="center"
+            android:letterSpacing="0.1"
+            android:textColor="@color/white"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="RK"
             />
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <androidx.constraintlayout.widget.ConstraintLayout
-          android:visibility="gone"
-          android:background="@drawable/bg_peer"
           android:id="@+id/llView2"
           android:layout_width="0dp"
           android:layout_height="0dp"
           android:layout_marginTop="8dp"
           android:layout_weight="1"
+          android:background="@drawable/bg_peer"
           android:orientation="vertical"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
@@ -164,35 +211,35 @@
           >
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            tools:text="Shaunak"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:id="@+id/nameTv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Shaunak"
             />
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/bg_initials"
-            android:textColor="@color/white"
-            tools:text="SJ"
-            android:gravity="center"
-            android:textSize="32dp"
-            android:letterSpacing="0.1"
-            android:textStyle="bold"
             android:id="@+id/nameInitials2"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:background="@drawable/bg_initials"
+            android:gravity="center"
+            android:letterSpacing="0.1"
+            android:textColor="@color/white"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="SJ"
             />
 
       </androidx.constraintlayout.widget.ConstraintLayout>
@@ -214,17 +261,15 @@
       >
 
     <ImageView
-        android:id="@+id/ivSwitchCamera"
+        android:id="@+id/ivRecord"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_baseline_switch_camera_24"
-        android:visibility="gone"
+        android:src="@drawable/ic_baseline_fiber_manual_record_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivMic"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white"
@@ -239,29 +284,10 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_baseline_mic_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivCamera"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivSwitchCamera"
+        app:layout_constraintEnd_toStartOf="@+id/ivLeaveCall"
+        app:layout_constraintStart_toEndOf="@+id/ivRecord"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white"
-        />
-
-    <ImageView
-        android:id="@+id/ivCamera"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:clickable="false"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_baseline_videocam_24"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivLeaveCall"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivMic"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@android:color/darker_gray"
         />
 
     <ImageView
@@ -275,7 +301,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivCamera"
+        app:layout_constraintStart_toEndOf="@+id/ivMic"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white"
         />
