@@ -10,25 +10,29 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.CoreSampleApp">
     <activity
-        android:name=".CallLeftActivity"
-        android:exported="false" />
-    <activity
-        android:name=".MainActivity"
-        android:exported="true">
+        android:name=".StartCallActivity"
+        android:exported="true" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity
+        android:name=".CallEndedActivity"
+        android:exported="false" />
+    <activity
+        android:name=".CallActivity"
+        android:exported="false">
+    </activity>
   </application>
 
   <uses-feature android:name="android.hardware.camera" />
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.BLUETOOTH" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
-
   <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

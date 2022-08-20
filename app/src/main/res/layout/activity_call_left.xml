@@ -4,20 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CallLeftActivity"
+    tools:context=".CallEndedActivity"
     >
 
-  <Button
+  <androidx.appcompat.widget.AppCompatButton
       android:id="@+id/btnRejoin"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="12dp"
-      android:minHeight="30dp"
-      android:minWidth="100dp"
+      android:layout_marginTop="35dp"
+      android:background="@drawable/bg_btn_primary"
+      android:minHeight="40dp"
+      android:minWidth="150dp"
+      android:text="Rejoin"
+      android:textColor="@color/white"
+      android:textSize="18sp"
+      android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/tvMessage"
-      android:text="Rejoin"
       />
 
   <TextView
@@ -28,8 +32,7 @@
       android:layout_marginEnd="32dp"
       android:layout_marginStart="32dp"
       android:gravity="center"
-      android:textColor="@android:color/holo_red_light"
-      android:textSize="18sp"
+      android:textSize="20sp"
       android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

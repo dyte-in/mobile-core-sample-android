@@ -3,16 +3,15 @@ package com.rohitkhirid.coresampleapp
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantJoined
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantLeft
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingRecordedEnded
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingRecordedStarted
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.OnAudioUpdated
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingParticipantJoined
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingParticipantLeft
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingRecordedEnded
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingRecordedStarted
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateFailed
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateJoined
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateLeft
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateLoading
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.OnAudioUpdated
 import io.dyte.core.DyteMobileClient
 import io.dyte.core.controllers.DyteRecordingState.RECORDING
 import io.dyte.core.listeners.DyteMeetingRoomEventsListener
@@ -20,10 +19,8 @@ import io.dyte.core.listeners.DyteParticipantEventsListener
 import io.dyte.core.listeners.DyteSelfEventsListener
 import io.dyte.core.models.DyteMeetingInfo
 import io.dyte.core.models.DyteMeetingParticipant
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class CallViewModel : ViewModel() {
   sealed class MeetingRoomState {
     object MeetingStateLoading : MeetingRoomState()
     object MeetingStateJoined : MeetingRoomState()

@@ -9,25 +9,25 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantJoined
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingParticipantLeft
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingRecordedEnded
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingRecordedStarted
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.OnAudioUpdated
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingParticipantJoined
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingParticipantLeft
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingRecordedEnded
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingRecordedStarted
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateFailed
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateJoined
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateLeft
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.MeetingStateLoading
+import com.rohitkhirid.coresampleapp.CallViewModel.MeetingRoomState.OnAudioUpdated
 import com.rohitkhirid.coresampleapp.R.drawable
 import com.rohitkhirid.coresampleapp.databinding.ActivityMainBinding
 import io.dyte.core.DyteAndroidClientBuilder
 import io.dyte.core.Utils
 import io.dyte.core.controllers.DyteRecordingState.RECORDING
 
-class MainActivity : AppCompatActivity() {
+class CallActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMainBinding
 
-  private lateinit var viewModel: MainViewModel
+  private lateinit var viewModel: CallViewModel
 
   private val meeting by lazy {
     DyteAndroidClientBuilder.build(this)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
     setContentView(binding.root)
 
-    viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+    viewModel = ViewModelProvider(this)[CallViewModel::class.java]
 
     binding.ivMic.setOnClickListener {
       try {
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         MeetingStateLeft -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state left")
-          startActivity(Intent(this@MainActivity, CallLeftActivity::class.java))
+          startActivity(Intent(this@CallActivity, CallEndedActivity::class.java))
           finishAffinity()
         }
 
