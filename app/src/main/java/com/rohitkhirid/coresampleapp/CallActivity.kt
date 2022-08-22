@@ -65,6 +65,12 @@ class CallActivity : AppCompatActivity() {
       }
     }
 
+    binding.tbBack.setOnClickListener {
+      meeting.leaveRoom()
+      startActivity(Intent(this, CallEndedActivity::class.java))
+      finishAffinity()
+    }
+
     viewModel.meetingStateLiveData.observe(this) { state ->
       when (state) {
         MeetingStateLoading -> {

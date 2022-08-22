@@ -11,12 +11,12 @@
       android:id="@+id/ivDyteLogo"
       android:layout_width="140dp"
       android:layout_height="70dp"
-      android:layout_marginTop="70dp"
+      android:layout_marginBottom="35dp"
       android:scaleType="centerInside"
       android:src="@drawable/ic_dyte_logo_dark"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/tvMeetingInfo"
       />
 
   <TextView
@@ -31,7 +31,8 @@
       android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/ivDyteLogo"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
       />
 
   <androidx.appcompat.widget.AppCompatButton
