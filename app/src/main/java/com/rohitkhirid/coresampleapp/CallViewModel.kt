@@ -52,6 +52,15 @@ class CallViewModel : ViewModel() {
       super.onAudioUpdate(audioEnabled)
       meetingStateLiveData.value = OnAudioUpdated(audioEnabled)
     }
+
+    override fun onRoomJoined() {
+      super.onRoomJoined()
+      meetingStateLiveData.value = MeetingStateJoined
+
+      if(meeting.recording.recordingState == RECORDING) {
+        meetingStateLiveData.value = MeetingRecordedStarted
+      }
+    }
   }
 
   private val participantEventListener = object : DyteParticipantEventsListener {
@@ -86,15 +95,6 @@ class CallViewModel : ViewModel() {
 
     override fun onMeetingRoomJoinStarted() {
       meetingStateLiveData.value = MeetingStateLoading
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onMeetingRoomJoined(meetingStartedAt: String) {
-        meetingStateLiveData.value = MeetingStateJoined
-
-      if(meeting.recording.recordingState == RECORDING) {
-        meetingStateLiveData.value = MeetingRecordedStarted
-      }
     }
 
     override fun onMeetingRoomLeft() {

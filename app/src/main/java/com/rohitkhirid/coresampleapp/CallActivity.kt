@@ -43,10 +43,10 @@ class CallActivity : AppCompatActivity() {
 
     binding.ivMic.setOnClickListener {
       try {
-        if (meeting.self.audioEnabled) {
-          meeting.self.disableAudio()
+        if (meeting.localUser.audioEnabled) {
+          meeting.localUser.disableAudio()
         } else {
-          meeting.self.enableAudio()
+          meeting.localUser.enableAudio()
         }
       } catch (e:Exception) {
         e.printStackTrace()
@@ -85,9 +85,9 @@ class CallActivity : AppCompatActivity() {
         MeetingStateJoined -> {
           println("DyteMobileClient | MainActivity onCreate Meeting state joined")
           hideLoader()
-          val initials = Utils.getInitialsFromName(meeting.self.name)
+          val initials = Utils.getInitialsFromName(meeting.localUser.name)
           binding.nameInitials1.text = initials
-          binding.nameTv1.text = meeting.self.name
+          binding.nameTv1.text = meeting.localUser.name
         }
 
         MeetingStateLeft -> {
