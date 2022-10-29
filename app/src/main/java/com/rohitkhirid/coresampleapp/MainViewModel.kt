@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.*
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
+import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import io.dyte.core.DyteMobileClient
 import io.dyte.core.listeners.DyteMeetingRoomEventsListener
+import io.dyte.core.listeners.DyteSelfEventsListener
 import io.dyte.core.models.DyteMeetingInfo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -56,13 +59,6 @@ class MainViewModel : ViewModel() {
       }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun onMeetingRoomJoined(meetingStartedAt: String) {
-      viewModelScope.launch(Dispatchers.Main) {
-        meetingStateLiveData.value = MeetingStateJoined
-      }
-    }
-
     override fun onMeetingRoomLeft() {
       viewModelScope.launch(Dispatchers.Main) {
         meetingStateLiveData.value = MeetingStateLeft
@@ -77,17 +73,26 @@ class MainViewModel : ViewModel() {
     }
   }
 
+  private val selfEventListener = object : DyteSelfEventsListener {
+    override fun onRoomJoined() {
+      super.onRoomJoined()
+      viewModelScope.launch(Dispatchers.Main) {
+        meetingStateLiveData.value = MeetingStateJoined
+      }
+    }
+  }
+
   fun start(meeting: DyteMobileClient) {
     this.meeting = meeting
-    viewModelScope.launch(Dispatchers.IO) {
-      delay(300)
-      meeting.addMeetingRoomEventsListener(meetingRoomEventsListner)
-      meeting.init(meetingInfo)
-    }
+
+    meeting.addMeetingRoomEventsListener(meetingRoomEventsListner)
+    meeting.addSelfEventsListener(selfEventListener)
+    meeting.init(meetingInfo)
   }
 
   override fun onCleared() {
     super.onCleared()
     meeting.removeMeetingRoomEventsListener(meetingRoomEventsListner)
+    meeting.removeSelfEventsListener(selfEventListener)
   }
 }

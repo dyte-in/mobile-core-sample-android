@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_mic_off_24
       }
       binding.ivMic.setImageResource(audioDrawable)
-      updateParticipant(meeting.self)
+      updateParticipant(meeting.localUser)
     }
 
     override fun onVideoUpdate(videoEnabled: Boolean) {
@@ -59,10 +59,7 @@ class MainActivity : AppCompatActivity() {
         R.drawable.ic_baseline_videocam_off_24
       }
       binding.ivCamera.setImageResource(videoDrawable)
-      updateParticipant(meeting.self)
-
-      meeting.participants.setMode(PAGINATED)
-      meeting.participants.joined.first().disableVideo()
+      updateParticipant(meeting.localUser)
     }
   }
 
@@ -95,6 +92,7 @@ class MainActivity : AppCompatActivity() {
     override fun onParticipantUpdated(participant: DyteMeetingParticipant) {
       super.onParticipantUpdated(participant)
       updateParticipant(participant)
+      refreshGrid(meeting.participants.active)
     }
 
     override fun onParticipantJoin(participant: DyteMeetingParticipant) {
@@ -117,22 +115,23 @@ class MainActivity : AppCompatActivity() {
 
     binding.ivCamera.setOnClickListener {
       if (isVideoEnabled) {
-        meeting.self.disableVideo()
+        meeting.localUser.disableVideo()
       } else {
-        meeting.self.enableVideo()
+        meeting.localUser.enableVideo()
       }
     }
 
     binding.ivMic.setOnClickListener {
       if (isAudioEnabled) {
-        meeting.self.disableAudio()
+        meeting.localUser.disableAudio()
       } else {
-        meeting.self.enableAudio()
+        meeting.localUser.enableAudio()
       }
     }
 
     binding.ivSwitchCamera.setOnClickListener {
-      meeting.self.switchCamera()
+      val devices = meeting.localUser.getVideoDevices()
+      meeting.localUser.switchCamera(devices.first { it.type != meeting.localUser.getSelectedVideoDevice().type })
     }
 
     binding.ivLeaveCall.setOnClickListener {
