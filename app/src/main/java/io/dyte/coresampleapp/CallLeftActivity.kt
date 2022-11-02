@@ -1,11 +1,10 @@
-package com.rohitkhirid.coresampleapp
+package io.dyte.coresampleapp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.rohitkhirid.coresampleapp.databinding.ActivityCallLeftBinding
-import com.rohitkhirid.coresampleapp.databinding.ActivityMainBinding
 
 class CallLeftActivity : AppCompatActivity() {
   private lateinit var binding: ActivityCallLeftBinding

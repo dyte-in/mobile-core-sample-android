@@ -10,10 +10,10 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.CoreSampleApp">
     <activity
-        android:name=".CallLeftActivity"
+        android:name="io.dyte.coresampleapp.CallLeftActivity"
         android:exported="false" />
     <activity
-        android:name=".MainActivity"
+        android:name="io.dyte.coresampleapp.MainActivity"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

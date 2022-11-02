@@ -1,13 +1,13 @@
-package com.rohitkhirid.coresampleapp
+package io.dyte.coresampleapp
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
-import com.rohitkhirid.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import io.dyte.core.DyteMobileClient
 import io.dyte.core.listeners.DyteMeetingRoomEventsListener
 import io.dyte.core.listeners.DyteSelfEventsListener
