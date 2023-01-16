@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-  compileSdk 32
+  compileSdk 33
 
   defaultConfig {
     applicationId "io.dyte.coresampleapp"
     minSdk 21
-    targetSdk 32
+    targetSdk 33
     versionCode 1
     versionName "1.0"
 
@@ -46,7 +46,7 @@ dependencies {
 
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
-  implementation 'io.dyte:core:1.6.0'
+  implementation 'io.dyte:core:1.9.0'
 
   testImplementation 'junit:junit:4.13.2'
   androidTestImplementation 'androidx.test.ext:junit:1.1.3'

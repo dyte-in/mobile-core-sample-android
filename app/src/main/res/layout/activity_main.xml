@@ -88,120 +88,17 @@
       tools:visibility="visible"
       >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvVideoPeers"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:animateLayoutChanges="true"
         android:background="#666666"
-        android:padding="16dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/clBottombar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
-
-      <LinearLayout
-          android:id="@+id/ll1"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_marginBottom="4dp"
-          android:orientation="horizontal"
-          android:weightSum="2"
-          app:layout_constraintBottom_toTopOf="@+id/ll2"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          >
-
-        <LinearLayout
-            android:id="@+id/llView1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-        <LinearLayout
-            android:id="@+id/llView2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:id="@+id/ll2"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_marginBottom="4dp"
-          android:layout_marginTop="4dp"
-          android:orientation="horizontal"
-          android:weightSum="2"
-          app:layout_constraintBottom_toTopOf="@+id/ll3"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/ll1"
-          >
-
-        <LinearLayout
-            android:id="@+id/llView3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-        <LinearLayout
-            android:id="@+id/llView4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:id="@+id/ll3"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_marginTop="4dp"
-          android:orientation="horizontal"
-          android:weightSum="2"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.5"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/ll2"
-          >
-
-        <LinearLayout
-            android:id="@+id/llView5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-        <LinearLayout
-            android:id="@+id/llView6"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            />
-
-      </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clBottombar"

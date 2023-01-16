@@ -1,17 +1,16 @@
 package io.dyte.coresampleapp
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
-import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
-import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
-import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import io.dyte.core.DyteMobileClient
 import io.dyte.core.listeners.DyteMeetingRoomEventsListener
 import io.dyte.core.listeners.DyteSelfEventsListener
 import io.dyte.core.models.DyteMeetingInfo
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
+import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -24,9 +23,9 @@ class MainViewModel : ViewModel() {
   }
 
   private val meetingInfo = DyteMeetingInfo(
-    orgId = ORGNIZATION_ID,
     roomName = MEETING_ROOM_NAME,
     authToken = AUTH_TOKEN,
+    baseUrl = "https://api.cluster.dyte.in"
   )
 
   val meetingStateLiveData = MutableLiveData<MeetingRoomState>()
@@ -48,42 +47,61 @@ class MainViewModel : ViewModel() {
 
     override fun onMeetingInitFailed(exception: Exception) {
       super.onMeetingInitFailed(exception)
-      viewModelScope.launch(Dispatchers.Main) {
-        meetingStateLiveData.value = MeetingStateFailed
-      }
+      println("DyteMobileClient | MainViewModel onMeetingInitFailed ${exception.localizedMessage}")
+      meetingStateLiveData.value = MeetingStateFailed
     }
 
+
+  }
+
+
+
+  private val selfEventListener = object : DyteSelfEventsListener {
     override fun onMeetingRoomJoinStarted() {
-      viewModelScope.launch(Dispatchers.Main) {
-        meetingStateLiveData.value = MeetingStateLoading
-      }
+      meetingStateLiveData.value = MeetingStateLoading
+    }
+
+    override fun onMeetingRoomJoined() {
+      super.onMeetingRoomJoined()
+      meetingStateLiveData.value = MeetingStateJoined
+    }
+
+    override fun onMeetingRoomJoinFailed(exception: Exception) {
+      super.onMeetingRoomJoinFailed(exception)
+      meetingStateLiveData.value = MeetingStateFailed
     }
 
     override fun onMeetingRoomLeft() {
-      viewModelScope.launch(Dispatchers.Main) {
-        meetingStateLiveData.value = MeetingStateLeft
-      }
+      super.onMeetingRoomLeft()
+      println("DyteMobileClient | MainViewModel onMeetingRoomLeft ")
+      meetingStateLiveData.value = MeetingStateLeft
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun onMeetingRoomJoinFailed(exception: Exception) {
-      viewModelScope.launch(Dispatchers.Main) {
-        meetingStateLiveData.value = MeetingStateFailed
-      }
-    }
-  }
-
-  private val selfEventListener = object : DyteSelfEventsListener {
-    override fun onRoomJoined() {
-      super.onRoomJoined()
-      viewModelScope.launch(Dispatchers.Main) {
-        meetingStateLiveData.value = MeetingStateJoined
-      }
+    override fun onMeetingRoomLeaveStarted() {
+      super.onMeetingRoomLeaveStarted()
+      println("DyteMobileClient | MainViewModel onMeetingRoomLeaveStarted ")
     }
   }
 
   fun start(meeting: DyteMobileClient) {
     this.meeting = meeting
+
+    meeting.addSelfEventsListener(object : DyteSelfEventsListener {
+      override fun onMeetingRoomJoinStarted() {
+        super.onMeetingRoomJoinStarted()
+        meetingStateLiveData.value = MeetingStateLoading
+      }
+
+      override fun onMeetingRoomJoined() {
+        super.onMeetingRoomJoined()
+        meetingStateLiveData.value = MeetingStateJoined
+      }
+
+      override fun onMeetingRoomJoinFailed(exception: Exception) {
+        super.onMeetingRoomJoinFailed(exception)
+        meetingStateLiveData.value = MeetingStateFailed
+      }
+    })
 
     meeting.addMeetingRoomEventsListener(meetingRoomEventsListner)
     meeting.addSelfEventsListener(selfEventListener)
