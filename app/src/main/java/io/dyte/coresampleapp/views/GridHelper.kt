@@ -1,11 +1,11 @@
 package io.dyte.coresampleapp.views
 
+import io.dyte.core.feat.DyteMeetingParticipant
 import io.dyte.coresampleapp.views.GridViewType.FullWidthFullHeight
 import io.dyte.coresampleapp.views.GridViewType.FullWidthHalfHeight
 import io.dyte.coresampleapp.views.GridViewType.FullWidthThirdHeight
 import io.dyte.coresampleapp.views.GridViewType.HalfWidthHalfHeight
 import io.dyte.coresampleapp.views.GridViewType.HalfWidthThirdHeight
-import io.dyte.core.models.DyteMeetingParticipant
 
 class GridHelper() {
     fun getChilds(data: List<DyteMeetingParticipant>): List<GridChildData> {

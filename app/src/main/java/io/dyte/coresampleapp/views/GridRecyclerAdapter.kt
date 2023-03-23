@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rohitkhirid.coresampleapp.R
-import io.dyte.core.Utils
+import io.dyte.core.feat.DyteMeetingParticipant
 import io.dyte.coresampleapp.views.GridRecyclerAdapter.ViewHolder
 import io.dyte.core.listeners.DyteParticipantUpdateListener
-import io.dyte.core.models.DyteMeetingParticipant
 
 class GridRecyclerAdapter internal constructor() :
   ListAdapter<GridChildData, ViewHolder>(GridAdapterDiffUtil()) {
@@ -81,8 +80,8 @@ class GridRecyclerAdapter internal constructor() :
 
     fun bind(dyteParticipant: DyteMeetingParticipant) {
       dyteParticipant.addParticipantUpdateListener(object : DyteParticipantUpdateListener {
-        override fun onAudioUpdate(participant: DyteMeetingParticipant, isEnabled: Boolean) {
-          super.onAudioUpdate(participant, isEnabled)
+        override fun onAudioUpdate(isEnabled: Boolean) {
+          super.onAudioUpdate(isEnabled)
           if (dyteParticipant.audioEnabled) {
             ivMic.setImageResource(R.drawable.ic_baseline_mic_24)
           } else {
@@ -90,8 +89,8 @@ class GridRecyclerAdapter internal constructor() :
           }
         }
 
-        override fun onVideoUpdate(participant: DyteMeetingParticipant, isEnabled: Boolean) {
-          super.onVideoUpdate(participant, isEnabled)
+        override fun onVideoUpdate(isEnabled: Boolean) {
+          super.onVideoUpdate(isEnabled)
           refreshVideo(dyteParticipant)
         }
       })
@@ -105,7 +104,7 @@ class GridRecyclerAdapter internal constructor() :
       }
 
       tvName.text = dyteParticipant.name
-      tvInitials.text = Utils.getInitialsFromName(dyteParticipant.name)
+      // tvInitials.text = Utils.getInitialsFromName(dyteParticipant.name)
     }
 
     private fun refreshVideo(dyteParticipant: DyteMeetingParticipant) {
@@ -113,7 +112,7 @@ class GridRecyclerAdapter internal constructor() :
       rlVideoContainer.removeAllViews()
       (videoView.parent as? ViewGroup)?.removeView(videoView)
       rlVideoContainer.addView(videoView)
-      videoView.render()
+      videoView.renderVideo()
 
       if (dyteParticipant.videoEnabled) {
         ivCamera.setImageResource(R.drawable.ic_baseline_videocam_24)
@@ -123,7 +122,7 @@ class GridRecyclerAdapter internal constructor() :
         ivCamera.setImageResource(R.drawable.ic_baseline_videocam_off_24)
       }
 
-      if (dyteParticipant.isScreenShareParticipant) {
+      if (dyteParticipant.screenShareTrack != null) {
         tvInitials.visibility = View.GONE
         ivCamera.visibility = View.GONE
         ivMic.visibility = View.GONE

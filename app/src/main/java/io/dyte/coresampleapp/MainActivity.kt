@@ -17,11 +17,9 @@ import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLeft
 import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateLoading
 import com.rohitkhirid.coresampleapp.databinding.ActivityMainBinding
 import io.dyte.core.DyteAndroidClientBuilder
-import io.dyte.core.controllers.GridInfo
+import io.dyte.core.feat.DyteMeetingParticipant
 import io.dyte.core.listeners.DyteParticipantEventsListener
 import io.dyte.core.listeners.DyteSelfEventsListener
-import io.dyte.core.models.DyteMeetingParticipant
-import io.dyte.core.models.DyteRoomParticipants
 import io.dyte.coresampleapp.views.GridHelper
 import io.dyte.coresampleapp.views.GridRecyclerAdapter
 
@@ -113,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     binding.ivSwitchCamera.setOnClickListener {
       val devices = meeting.localUser.getVideoDevices()
-      meeting.localUser.switchCamera(devices.first { it.type != meeting.localUser.getSelectedVideoDevice().type })
+      meeting.localUser.setVideoDevice(devices.first { it.type != meeting.localUser.getSelectedVideoDevice().type })
     }
 
     binding.ivLeaveCall.setOnClickListener {

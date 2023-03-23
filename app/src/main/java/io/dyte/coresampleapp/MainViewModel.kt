@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.dyte.core.DyteMobileClient
 import io.dyte.core.listeners.DyteMeetingRoomEventsListener
-import io.dyte.core.listeners.DyteSelfEventsListener
 import io.dyte.core.models.DyteMeetingInfo
 import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateFailed
 import io.dyte.coresampleapp.MainViewModel.MeetingRoomState.MeetingStateJoined
@@ -51,18 +50,13 @@ class MainViewModel : ViewModel() {
       meetingStateLiveData.value = MeetingStateFailed
     }
 
-
-  }
-
-
-
-  private val selfEventListener = object : DyteSelfEventsListener {
     override fun onMeetingRoomJoinStarted() {
+      super.onMeetingRoomJoinStarted()
       meetingStateLiveData.value = MeetingStateLoading
     }
 
-    override fun onMeetingRoomJoined() {
-      super.onMeetingRoomJoined()
+    override fun onMeetingRoomJoinCompleted() {
+      super.onMeetingRoomJoinCompleted()
       meetingStateLiveData.value = MeetingStateJoined
     }
 
@@ -71,46 +65,22 @@ class MainViewModel : ViewModel() {
       meetingStateLiveData.value = MeetingStateFailed
     }
 
-    override fun onMeetingRoomLeft() {
-      super.onMeetingRoomLeft()
-      println("DyteMobileClient | MainViewModel onMeetingRoomLeft ")
+    override fun onMeetingRoomLeaveCompleted() {
+      super.onMeetingRoomLeaveCompleted()
       meetingStateLiveData.value = MeetingStateLeft
     }
-
-    override fun onMeetingRoomLeaveStarted() {
-      super.onMeetingRoomLeaveStarted()
-      println("DyteMobileClient | MainViewModel onMeetingRoomLeaveStarted ")
-    }
   }
+
 
   fun start(meeting: DyteMobileClient) {
     this.meeting = meeting
 
-    meeting.addSelfEventsListener(object : DyteSelfEventsListener {
-      override fun onMeetingRoomJoinStarted() {
-        super.onMeetingRoomJoinStarted()
-        meetingStateLiveData.value = MeetingStateLoading
-      }
-
-      override fun onMeetingRoomJoined() {
-        super.onMeetingRoomJoined()
-        meetingStateLiveData.value = MeetingStateJoined
-      }
-
-      override fun onMeetingRoomJoinFailed(exception: Exception) {
-        super.onMeetingRoomJoinFailed(exception)
-        meetingStateLiveData.value = MeetingStateFailed
-      }
-    })
-
     meeting.addMeetingRoomEventsListener(meetingRoomEventsListner)
-    meeting.addSelfEventsListener(selfEventListener)
     meeting.init(meetingInfo)
   }
 
   override fun onCleared() {
     super.onCleared()
     meeting.removeMeetingRoomEventsListener(meetingRoomEventsListner)
-    meeting.removeSelfEventsListener(selfEventListener)
   }
 }
